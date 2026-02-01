@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Be My Valentine ❤️</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(10px);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      width: 90%;
+      max-width: 500px;
+      position: relative;
+      z-index: 5;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      color: #ff2e63;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    /* ✅ button area */
+    .buttons {
+      position: relative;
+      height: 90px;
+      width: 100%;
+    }
+
+    /* ✅ SAME SIZE buttons */
+    button {
+      width: 150px;
+      height: 50px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      font-weight: bold;
+      z-index: 10;
+    }
+
+    /* ✅ YES button slightly left */
+    #yesBtn {
+      background: #ff2e63;
+      color: white;
+      position: absolute;
+      top: 20px;
+      left: 30%;
+      transform: translateX(-50%);
+    }
+
+    #yesBtn:hover {
+      background: #ff174f;
+      transform: translateX(-50%) scale(1.1);
+    }
+
+    /* ✅ NO button fixed so it can move entire screen */
+    #noBtn {
+      background: white;
+      color: #ff2e63;
+      border: 2px solid #ff2e63;
+
+      position: fixed;
+      left: 70%;
+      top: 55%;
+      transform: translate(-50%, -50%);
+    }
+
+    .love-message {
+      display: none;
+      margin-top: 25px;
+      font-size: 1.4rem;
+      color: #ff174f;
+      font-weight: bold;
+    }
+
+    .heart {
+      position: absolute;
+      top: -20px;
+      font-size: 24px;
+      animation: fall 5s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-20px); opacity: 1; }
+      100% { transform: translateY(110vh); opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Will you be my Valentine? 💖</h1>
+    <p>Only one answer is correct 😌</p>
+
+    <div class="buttons">
+      <button id="yesBtn">YES</button>
+    </div>
+
+    <div class="love-message" id="loveMessage">
+      Yayyyy 😍❤️ I knew you’d say YES! <br>
+      You are my forever Valentine 💕
+    </div>
+  </div>
+
+  <!-- ✅ NO button outside container (so it can move full screen) -->
+  <button id="noBtn">NO</button>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const loveMessage = document.getElementById("loveMessage");
+
+    // ✅ Super fast movement effect
+    noBtn.style.transition = "all 0.05s linear";
+
+    function moveNoButton() {
+      const btnWidth = noBtn.offsetWidth;
+      const btnHeight = noBtn.offsetHeight;
+
+      const maxX = window.innerWidth - btnWidth;
+      const maxY = window.innerHeight - btnHeight;
+
+      // ✅ random anywhere (including up)
+      const randomX = Math.floor(Math.random() * maxX);
+      const randomY = Math.floor(Math.random() * maxY);
+
+      noBtn.style.left = randomX + "px";
+      noBtn.style.top = randomY + "px";
+    }
+
+    // ✅ Moves when hover
+    noBtn.addEventListener("mouseover", moveNoButton);
+
+    // ✅ Moves if she tries to click
+    noBtn.addEventListener("mousedown", moveNoButton);
+
+    // ✅ YES action
+    yesBtn.addEventListener("click", () => {
+      loveMessage.style.display = "block";
+      noBtn.style.display = "none";
+      yesBtn.style.display = "none";
+
+      for (let i = 0; i < 30; i++) {
+        createHeart();
+      }
+    });
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤️";
+
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+      heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    }
+  </script>
+</body>
+</html>
